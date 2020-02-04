@@ -48,9 +48,9 @@ public abstract class CreateUpdateCommand<T> implements Command {
                 LOG.error("No such field: " + fieldName);
                 throw new CommandException(this, "No field " + fieldName);
             }
-            LOG.debug("Setting field " + fieldName);
             try {
                 String value = Utils.getWordOrQuotedText(in);
+                LOG.debug("Setting field " + fieldName + " with value " + value);
                 currentField.set(entry, value);
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 LOG.error("Unable to set field: " + fieldName);
@@ -75,7 +75,9 @@ public abstract class CreateUpdateCommand<T> implements Command {
                 handlers.get(null).handle(in, out);
             }
         }
-        repo.save(entry);
+        var newEntry =  repo.save(entry);
+        out.println(newEntry);
+
     }
 
 

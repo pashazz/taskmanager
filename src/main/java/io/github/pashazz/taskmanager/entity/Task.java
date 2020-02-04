@@ -1,20 +1,22 @@
 package io.github.pashazz.taskmanager.entity;
 
+import io.github.pashazz.taskmanager.ShortStringRepresentable;
+import org.hibernate.annotations.Check;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
 @Entity
-public class Task {
+public class Task implements ShortStringRepresentable {
     @Column (nullable = false, updatable = false)
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false, updatable = false)
-    @JoinColumn(name="project_fk")
+    @JoinColumn(name="project_fk", nullable = false)
     private Project project;
 
     @ManyToOne
@@ -62,4 +64,27 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Task{");
+        sb.append("id=").append(id);
+        sb.append(", project=").append(project == null ? "not assigned" :project.shortToString());
+        sb.append(", person=").append(person == null ? "not assigned" : person.shortToString());
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public String shortToString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(id);
+        sb.append(" - '");
+        sb.append(name);
+        sb.append("'");
+        return sb.toString();
+    }
+
 }

@@ -1,0 +1,3 @@
+create person name maria;
+create project name test;
+create task name t1 project 2 person 1

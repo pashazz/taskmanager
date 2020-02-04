@@ -2,28 +2,24 @@ package io.github.pashazz.taskmanager;
 
 import io.github.pashazz.taskmanager.command.Command;
 import io.github.pashazz.taskmanager.command.CommandHandler;
+import io.github.pashazz.taskmanager.entity.Task;
 import io.github.pashazz.taskmanager.exception.CommandException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Utils {
     public static String getWordOrQuotedText(@NonNull final Scanner scanner) {
-        Pattern quoted = Pattern.compile("\".*\"");
-        if (scanner.hasNext(quoted)) {
-            return scanner.next(quoted);
-        } else {
-            if (scanner.hasNext())
-                return scanner.next();
-            else {
-                return null;
-            }
+        String rx = "[^\"\\s]+|\"(\\\\.|[^\\\\\"])*\"";
+        String found = scanner.findInLine(rx);
+        if (found == null)
+            return null;
+        if (found.startsWith("\"")) {
+            found = found.substring(1, found.length() - 1);
         }
+        return found;
     }
 
     public static CommandHandler createMultiHandler(@NonNull final Map<String, CommandHandler> handlers, final Command command) {
@@ -66,6 +62,22 @@ public class Utils {
         return entry.get();
     }
 
+    public static String iteratorToShortString(Iterator<? extends ShortStringRepresentable> iter) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        while (iter.hasNext()) {
+            var next = iter.next();
+            sb.append(next.shortToString());
+            if (iter.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+
+
+        return sb.toString();
+    }
+
     public interface EntryHandler<T> {
         void doWith(T item);
     }
@@ -74,4 +86,10 @@ public class Utils {
             handler.doWith(Utils.scanId(type, repo, scanner, command));
         }
     }
+
+    /**
+     * Short version of toString preventing stack overflows
+     * @param sb
+     */
+
 }

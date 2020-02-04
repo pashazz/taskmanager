@@ -1,11 +1,14 @@
 package io.github.pashazz.taskmanager.entity;
 
+import io.github.pashazz.taskmanager.ShortStringRepresentable;
+import io.github.pashazz.taskmanager.Utils;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Person {
+public class Person implements ShortStringRepresentable {
     @Id
     @GeneratedValue
     @Column
@@ -56,5 +59,31 @@ public class Person {
 
     public List<Project> getProjects() {
         return projects;
+    }
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb = new StringBuilder("Person{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", tasks=").append(Utils.iteratorToShortString(tasks.iterator()));
+        sb.append(", projects=").append(Utils.iteratorToShortString(projects.iterator()));
+        sb.append("}");
+
+
+        return sb.toString();
+
+    }
+
+    @Override
+    public String shortToString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(id);
+        sb.append(" - '");
+        sb.append(name);
+        sb.append("'");
+        return sb.toString();
     }
 }

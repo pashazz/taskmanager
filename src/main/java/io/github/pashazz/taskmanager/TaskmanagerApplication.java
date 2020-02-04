@@ -14,22 +14,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 @SpringBootApplication
-public class TaskmanagerApplication implements CommandLineRunner {
-
+public class TaskmanagerApplication  {
 	public static void main(String[] args) {
 		SpringApplication.run(TaskmanagerApplication.class, args);
-	}
-
-
-	private static Log LOG = LogFactory.getLog(TaskmanagerApplication.class);
-
-	@Autowired
-	private CommandFactory factory;
-
-	@Override
-	public void run(String... args) throws Exception {
-		LOG.debug("The application has started");
-		CommandBuilder cb = new CommandBuilder(System.in, System.out, factory);
-		cb.execute();
 	}
 }

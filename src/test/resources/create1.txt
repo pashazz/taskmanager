@@ -1,0 +1,3 @@
+create person name maria
+create project name mainproject
+create task name test1 description "my test task" project 2

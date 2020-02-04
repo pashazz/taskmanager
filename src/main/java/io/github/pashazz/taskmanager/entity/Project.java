@@ -1,5 +1,7 @@
 package io.github.pashazz.taskmanager.entity;
 
+import io.github.pashazz.taskmanager.ShortStringRepresentable;
+import io.github.pashazz.taskmanager.Utils;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -7,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Project {
+public class Project implements ShortStringRepresentable {
     @Column
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     private Long id;
 
     @Column
@@ -20,7 +22,7 @@ public class Project {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany(mappedBy = "projects")
@@ -53,4 +55,27 @@ public class Project {
     public List<Task> getTasks() {
         return tasks;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Project{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", tasks=").append(Utils.iteratorToShortString(tasks.iterator()));
+        sb.append(", persons=").append(Utils.iteratorToShortString(persons.iterator()));
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public String shortToString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(id);
+        sb.append(" - '");
+        sb.append(name);
+        sb.append("'");
+        return sb.toString();
+    }
+
 }
