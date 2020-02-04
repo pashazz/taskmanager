@@ -31,3 +31,5 @@ insert into task (id, description, name, person_fk, project_fk) values (11,
 
 insert into task (id, description, name, person_fk, project_fk) values (12,
 'Get Nobel Peace Prize', 'Nobel', 3, 10);
+
+alter sequence hibernate_sequence restart with 13;

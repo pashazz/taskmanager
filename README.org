@@ -1,5 +1,7 @@
 * Менеджер задач
 
+[[https://travis-ci.org/pashazz/taskmanager.svg?branch=master]]
+
 Простой CRUD менеджер задач, обладающий следующими свойствами:
 
 + каждая задача (task) состоит в проекте (project) и имеет или не имеет привязанного исполнителя (person)
@@ -13,3 +15,26 @@
 
 ** Запуск тестов
 ~mvn test~
+
+** Сборка приложения
+~mvn -DskipTests clean package~
+
+*** Запуск приложения
+
+~mvn exec:java~
+
+
+
+** Синтаксис команд
+
+Разделителем является пробел, но вы можете использовать "кавычки, чтобы задать текст в несколько слов"
+*** Создание новых элементов
+
+~create <type> <field1> <value1>~
+
+
+**** Пример: создание исполнителя
+~create person name "Bill Gates" email gates@ms.com~
+
+**** Пример: создание проекта
+~create project name "Project" description "Long description"

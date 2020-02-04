@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<start-class>io.github.pashazz.taskmanager.TaskmanagerApplication</start-class>
 	</properties>
 
 	<dependencies>
