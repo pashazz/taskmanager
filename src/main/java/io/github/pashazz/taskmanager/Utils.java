@@ -2,7 +2,6 @@ package io.github.pashazz.taskmanager;
 
 import io.github.pashazz.taskmanager.command.Command;
 import io.github.pashazz.taskmanager.command.CommandHandler;
-import io.github.pashazz.taskmanager.entity.Task;
 import io.github.pashazz.taskmanager.exception.CommandException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
@@ -50,7 +49,7 @@ public class Utils {
         return Pattern.compile(patternBuilder.toString());
     }
 
-    public static @NonNull <T> T scanIdReturnEntity(final Class<T> type, final CrudRepository<T, Long> repo, final Scanner scanner, final Command command ) throws CommandException {
+    public static @NonNull <T extends Printable> T scanIdReturnEntity(final Class<T> type, final CrudRepository<T, Long> repo, final Scanner scanner, final Command command ) throws CommandException {
         if (!scanner.hasNextLong()) {
             throw new CommandException(command, "Expected: long; not found");
         }
@@ -73,7 +72,7 @@ public class Utils {
         return id;
     }
 
-    public static String iteratorToShortString(Iterator<? extends ShortStringRepresentable> iter) {
+    public static String iteratorToShortString(Iterator<? extends Printable> iter) {
         final StringBuilder sb = new StringBuilder();
         sb.append("[");
         while (iter.hasNext()) {
@@ -96,17 +95,12 @@ public class Utils {
     public interface IdHandler {
         void doWith(Long id);
     }
-    public static <T> void scanIdAndDoWithEntityWhileExists(final Class<T> type, final CrudRepository<T, Long> repo, final Scanner scanner, final Command command, EntryHandler<T> handler) throws CommandException {
+    public static <T extends Printable> void scanIdAndDoWithEntityWhileExists(final Class<T> type, final CrudRepository<T, Long> repo, final Scanner scanner, final Command command, EntryHandler<T> handler) throws CommandException {
         while(scanner.hasNextLong()) {
             handler.doWith(Utils.scanIdReturnEntity(type, repo, scanner, command));
         }
     }
 
-    public static <T> void scanIdAndDoWithIdWhileExists(final Class<T> type, final CrudRepository<T, Long> repo, final Scanner scanner, final Command command, IdHandler handler) throws CommandException {
-        while(scanner.hasNextLong()) {
-            handler.doWith(Utils.scanId(type, repo, scanner, command));
-        }
-    }
     /**
      * Short version of toString preventing stack overflows
      * @param sb

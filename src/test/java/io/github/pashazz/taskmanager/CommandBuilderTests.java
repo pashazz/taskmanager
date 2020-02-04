@@ -172,12 +172,15 @@ public class CommandBuilderTests {
         fillTestData("create2.txt");
         fillTestData("removeproject.txt");
 
-        //assertFalse(projects.findById(2L).isPresent());
-        //assertFalse(tasks.findById(3L).isPresent());
-        //assertTrue(persons.findById(1L).isPresent());
-        //Person person = persons.getOne(1L);
-        //assertEquals(0, person.getProjects().size());
-        //assertEquals(0, person.getTasks().size());
+        doInTransaction(() -> {
+            assertFalse(projects.findById(2L).isPresent());
+            assertFalse(tasks.findById(3L).isPresent());
+            assertTrue(persons.findById(1L).isPresent());
+            Person person = persons.getOne(1L);
+            assertEquals(0, person.getProjects().size());
+            assertEquals(0, person.getTasks().size());
+        });
+
 
 
     }

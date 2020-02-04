@@ -1,5 +1,6 @@
 package io.github.pashazz.taskmanager.command.commands;
 
+import io.github.pashazz.taskmanager.Printable;
 import io.github.pashazz.taskmanager.Utils;
 import io.github.pashazz.taskmanager.command.Command;
 import io.github.pashazz.taskmanager.command.CommandHandler;
@@ -15,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 
-public abstract class CreateUpdateCommand<T> implements Command {
+public abstract class CreateUpdateCommand<T extends Printable> implements Command {
     private static final Log LOG  = LogFactory.getLog(CreateUpdateCommand.class);
     protected final CrudRepository<T, Long> repo;
     protected T entry;

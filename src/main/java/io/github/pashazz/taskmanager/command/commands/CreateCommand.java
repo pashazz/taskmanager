@@ -1,5 +1,6 @@
 package io.github.pashazz.taskmanager.command.commands;
 
+import io.github.pashazz.taskmanager.Printable;
 import io.github.pashazz.taskmanager.exception.CommandException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 
-public class CreateCommand<T> extends CreateUpdateCommand<T> {
+public class CreateCommand<T extends Printable> extends CreateUpdateCommand<T> {
     public CreateCommand(CrudRepository<T, Long> repo, Class<T> c) {
         super(repo, c);
     }

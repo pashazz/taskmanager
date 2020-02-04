@@ -1,6 +1,6 @@
 package io.github.pashazz.taskmanager.entity;
 
-import io.github.pashazz.taskmanager.ShortStringRepresentable;
+import io.github.pashazz.taskmanager.Printable;
 import io.github.pashazz.taskmanager.Utils;
 
 import javax.persistence.*;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Person implements ShortStringRepresentable {
+public class Person implements Printable {
     @Id
     @GeneratedValue
-    @Column
+    @Column(nullable = false, unique = true, updatable = false)
     private Long id;
 
     @Column
@@ -34,6 +34,7 @@ public class Person implements ShortStringRepresentable {
     private List<Project> projects = new ArrayList<>();
 
 
+
     public Long getId() {
         return id;
     }
@@ -52,6 +53,10 @@ public class Person implements ShortStringRepresentable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Task> getTasks() {

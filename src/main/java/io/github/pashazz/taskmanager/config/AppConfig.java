@@ -22,10 +22,6 @@ public class AppConfig {
     @Autowired
     private Environment environment;
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public Server h2Server() throws SQLException {
-        return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
-    }
     @Bean
     public DataSourceInitializer dataSourceInitializer(@Autowired final DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
@@ -35,8 +31,9 @@ public class AppConfig {
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         if (!Arrays.asList(environment.getActiveProfiles()).contains("test")) {
             LOG.debug("Filling DB for production");
+            resourceDatabasePopulator.addScript(new ClassPathResource("/data.sql"));
         } else {
-            LOG.debug("Filling DB for test");
+            LOG.debug("Preparing DB for test");
         }
         return dataSourceInitializer;
     }

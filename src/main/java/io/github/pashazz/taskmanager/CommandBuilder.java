@@ -37,7 +37,7 @@ public class CommandBuilder {
                 System.exit(0);
             } else {
                 String line = scanner.nextLine();
-                LOG.debug("Read line: " + line);
+                LOG.trace("Read line: " + line);
                 try {
                     var lineScanner = new Scanner(new ByteArrayInputStream(line.getBytes()));
                     var command = factory.getCommandFromInput(lineScanner);
@@ -47,7 +47,7 @@ public class CommandBuilder {
                         continue;
                     }
                     else {
-                        LOG.debug("Skipping empty line");
+                        LOG.trace("Skipping empty line");
                         continue;
                     }
                 } catch (UnrecognizedEntityException e) {

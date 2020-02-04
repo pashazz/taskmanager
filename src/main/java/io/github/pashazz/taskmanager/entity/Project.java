@@ -1,6 +1,6 @@
 package io.github.pashazz.taskmanager.entity;
 
-import io.github.pashazz.taskmanager.ShortStringRepresentable;
+import io.github.pashazz.taskmanager.Printable;
 import io.github.pashazz.taskmanager.Utils;
 import org.springframework.lang.NonNull;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Project implements ShortStringRepresentable {
+public class Project implements Printable {
     @Column
     @Id
     @GeneratedValue()

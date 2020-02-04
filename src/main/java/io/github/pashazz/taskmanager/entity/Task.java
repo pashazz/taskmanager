@@ -1,16 +1,12 @@
 package io.github.pashazz.taskmanager.entity;
 
-import io.github.pashazz.taskmanager.ShortStringRepresentable;
-import org.hibernate.annotations.Check;
-import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.ReadOnlyProperty;
-import org.springframework.lang.NonNull;
+import io.github.pashazz.taskmanager.Printable;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Task implements ShortStringRepresentable {
+public class Task implements Printable {
     @Column (nullable = false, updatable = false)
     @Id
     @GeneratedValue
