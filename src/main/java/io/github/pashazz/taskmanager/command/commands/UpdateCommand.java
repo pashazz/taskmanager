@@ -18,7 +18,7 @@ public class UpdateCommand<T> extends CreateUpdateCommand<T> {
     private static Log LOG = LogFactory.getLog(UpdateCommand.class);
     @Override
     public void execute(Scanner in, PrintStream out) throws CommandException {
-        entry = Utils.scanId(c, repo, in, this);
+        entry = Utils.scanIdReturnEntity(c, repo, in, this);
         LOG.debug("Updating entry " + entry);
         super.execute(in, out);
     }

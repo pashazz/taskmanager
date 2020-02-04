@@ -7,6 +7,7 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Task implements ShortStringRepresentable {
@@ -87,4 +88,19 @@ public class Task implements ShortStringRepresentable {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Task) {
+            Task task = (Task) o;
+            return id.equals(task.getId());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

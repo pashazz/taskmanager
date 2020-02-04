@@ -29,6 +29,7 @@ public class CommandBuilder {
 
     private final Log LOG = LogFactory.getLog(CommandBuilder.class);
 
+
     public void execute() {
         Scanner scanner = new Scanner(is);
         while (scanner.hasNextLine()) {

@@ -15,13 +15,13 @@ public class CreateTask extends CreateCommand<Task> {
     CreateTask(CrudRepository<Task, Long> repo, ProjectRepository projects, PersonRepository persons) {
         super(repo, Task.class);
         handlers.put("project", (in, out) -> {
-            var project = Utils.scanId(Project.class, projects, in, this);
+            var project = Utils.scanIdReturnEntity(Project.class, projects, in, this);
             entry.setProject(project);
             project.getTasks().add(entry);
         });
 
         handlers.put("person", (in, out) -> {
-            var person = Utils.scanId(Person.class, persons, in, this);
+            var person = Utils.scanIdReturnEntity(Person.class, persons, in, this);
             entry.setPerson(person);
             person.getTasks().add(entry);
         });

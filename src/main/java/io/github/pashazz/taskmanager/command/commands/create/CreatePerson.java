@@ -18,13 +18,13 @@ public class CreatePerson extends CreateCommand<Person> {
                  ProjectRepository projects, TaskRepository tasks) {
         super(repo, Person.class);
         handlers.put("projects", (in, out)-> {
-            Utils.scanIdAndDoWhileExists(Project.class, projects, in, this, project -> {
+            Utils.scanIdAndDoWithEntityWhileExists(Project.class, projects, in, this, project -> {
                 entry.getProjects().add(project);
                 project.getPersons().add(entry);
             });
         });
         handlers.put("tasks", (in, out)-> {
-            Utils.scanIdAndDoWhileExists(Task.class, tasks, in, this, task -> {
+            Utils.scanIdAndDoWithEntityWhileExists(Task.class, tasks, in, this, task -> {
                 entry.getTasks().add(task);
                 task.setPerson(entry);
             });

@@ -29,7 +29,7 @@ public class UpdateProject extends UpdateCommand<Project> {
         super(repo, Project.class);
         Map<String, CommandHandler> addHandlers = new HashMap<>();
         addHandlers.put("persons", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Person.class, persons, in, this,
+            Utils.scanIdAndDoWithEntityWhileExists(Person.class, persons, in, this,
                     person -> {
                         entry.getPersons().add(person);
                         person.getProjects().add(entry);
@@ -39,7 +39,7 @@ public class UpdateProject extends UpdateCommand<Project> {
 
         Map<String, CommandHandler> removeHandlers = new HashMap<>();
         removeHandlers.put("persons", (in, out) -> {
-           Utils.scanIdAndDoWhileExists(Person.class, persons, in, this,
+           Utils.scanIdAndDoWithEntityWhileExists(Person.class, persons, in, this,
                    person -> {
                        entry.getPersons().remove(person);
                        person.getProjects().remove(entry);
@@ -48,7 +48,7 @@ public class UpdateProject extends UpdateCommand<Project> {
         });
 
         removeHandlers.put("tasks", (in, out) -> {
-           Utils.scanIdAndDoWhileExists(Task.class, tasks, in, this,
+           Utils.scanIdAndDoWithEntityWhileExists(Task.class, tasks, in, this,
                    task -> {
                        entry.getTasks().remove(task);
                        task.setPerson(null);

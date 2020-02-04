@@ -4,7 +4,6 @@ import io.github.pashazz.taskmanager.Utils;
 import io.github.pashazz.taskmanager.command.Command;
 import io.github.pashazz.taskmanager.exception.CommandException;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.PrintStream;
@@ -22,7 +21,7 @@ public class ReadCommand<T>  implements Command {
     @Override
     @Transactional
     public void execute(Scanner in, PrintStream out) throws CommandException {
-        Utils.scanIdAndDoWhileExists(type, repo, in, this, entry -> {
+        Utils.scanIdAndDoWithEntityWhileExists(type, repo, in, this, entry -> {
             out.println(entry.toString());
         });
     }

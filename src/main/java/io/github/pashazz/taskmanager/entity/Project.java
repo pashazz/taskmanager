@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Project implements ShortStringRepresentable {
@@ -22,7 +23,7 @@ public class Project implements ShortStringRepresentable {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "project", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany(mappedBy = "projects")
@@ -78,4 +79,19 @@ public class Project implements ShortStringRepresentable {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Project) {
+            Project project = (Project) o;
+            return id.equals(project.getId());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

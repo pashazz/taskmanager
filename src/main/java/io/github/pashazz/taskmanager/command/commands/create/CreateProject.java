@@ -14,7 +14,7 @@ public class CreateProject extends CreateCommand<Project> {
     CreateProject(CrudRepository<Project, Long> repo, PersonRepository persons) {
         super(repo, Project.class);
         handlers.put("persons", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Person.class, persons, in, this,
+            Utils.scanIdAndDoWithEntityWhileExists(Person.class, persons, in, this,
                     person -> {
                         entry.getPersons().add(person);
                         person.getProjects().add(entry);

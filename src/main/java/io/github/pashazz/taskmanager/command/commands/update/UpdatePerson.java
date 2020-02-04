@@ -42,7 +42,7 @@ public class UpdatePerson extends UpdateCommand<Person> {
         Map<String, CommandHandler> addHandlers = new HashMap<>();
 
         addHandlers.put("projects", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Project.class, projects, in, this, project -> {
+            Utils.scanIdAndDoWithEntityWhileExists(Project.class, projects, in, this, project -> {
                 entry.getProjects().add(project);
                 project.getPersons().add(entry);
                 LOG.debug("to person " + entry +" added project " + project);
@@ -50,7 +50,7 @@ public class UpdatePerson extends UpdateCommand<Person> {
             });
         });
         addHandlers.put("tasks", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Task.class, tasks, in, this, task -> {
+            Utils.scanIdAndDoWithEntityWhileExists(Task.class, tasks, in, this, task -> {
                 entry.getTasks().add(task);
                 task.setPerson(entry);
                 LOG.debug("to person " + entry +" added task " + task);
@@ -59,7 +59,7 @@ public class UpdatePerson extends UpdateCommand<Person> {
 
         Map<String, CommandHandler> removeHandlers = new HashMap<>();
         removeHandlers.put("projects", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Project.class, projects, in, this,
+            Utils.scanIdAndDoWithEntityWhileExists(Project.class, projects, in, this,
                     project -> {
                         entry.getProjects().remove(project);
                         project.getPersons().remove(entry);
@@ -67,7 +67,7 @@ public class UpdatePerson extends UpdateCommand<Person> {
                     });
         });
         removeHandlers.put("tasks", (in, out) -> {
-            Utils.scanIdAndDoWhileExists(Task.class, tasks, in, this,
+            Utils.scanIdAndDoWithEntityWhileExists(Task.class, tasks, in, this,
                     task -> {
                         entry.getTasks().remove(task);
                         task.setPerson(null);

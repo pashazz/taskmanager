@@ -6,6 +6,7 @@ import io.github.pashazz.taskmanager.Utils;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Person implements ShortStringRepresentable {
@@ -85,5 +86,21 @@ public class Person implements ShortStringRepresentable {
         sb.append(name);
         sb.append("'");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Person) { // I am aware that the proxies will evaluate this to true.
+            Person person = (Person) o;
+            return id.equals(person.getId());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

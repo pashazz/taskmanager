@@ -21,7 +21,7 @@ public class UpdateTask extends UpdateCommand<Task> {
             out.println("Project field is read-only");
         });
         changeHandlers.put("person", (in, out) -> {
-           var person = Utils.scanId(Person.class, persons, in, this);
+           var person = Utils.scanIdReturnEntity(Person.class, persons, in, this);
            entry.getPerson().getTasks().remove(entry);
            entry.setPerson(person);
         });
