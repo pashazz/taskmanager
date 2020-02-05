@@ -10,8 +10,9 @@
 + исполнитель не может быть привязан к задаче, если он не состоит в соответствующем проекте
 + если исполнитель удаляется из проекта, то его задачи в этом проекте больше не имеют мсполнителя
 
-** Используемые технологии
-   Используется база данных H2 (in-memory)
+** О базе данных
+   Используется база данных H2 (in-memory) с триггером. В базе данных есть example data.
+
 
 ** Запуск тестов
 ~mvn test~
@@ -27,14 +28,98 @@
 
 ** Синтаксис команд
 
-Разделителем является пробел, но вы можете использовать "кавычки, чтобы задать текст в несколько слов"
+Разделителем является пробел, но вы можете использовать "кавычки, чтобы задать текст в несколько слов
+
+Действия:
+
++ create
++ read
++ update
++ delete
+
+Типы элементов:
+
++ task
++ person
++ project
+
+в выражениии ~update <type1> add/remove <type2> <TYPE2_ID> <TYPE2_ID>~ type2 участвует во множественном числе
+
+
+
+*** Получение существующих элементов
+
+~read <type> <id1> <id2> ...~
+
+*** Получение всех элементов опреденного типа
+~read <type> all~
+
+Например, все задачи:
+~read task all~
+
+*** Удаление элементов
+
+delete <type> <id1> <id2>
 *** Создание новых элементов
 
 ~create <type> <field1> <value1>~
 
 
-**** Пример: создание исполнителя
+**** Пример: создание пользователя (исполнителя)
 ~create person name "Bill Gates" email gates@ms.com~
 
 **** Пример: создание проекта
-~create project name "Project" description "Long description"
+~create project name "Project" description "Long description"~
+
+**** Пример: создание задачи
+~create project name "Task" description "Description" project <PROJECT_ID> person <PERSON_ID>~
+
+Заметим, что поле project является обязательным, а person - нет.
+
+*** Изменение элементов: изменение текстовых полей
+
+~update <type> <id> <field name1> <Field value1> <field name 2> <field value 2>~
+
+**** Пример: изменение имени
+~update person <PERSON_ID> name "Quentin"~
+
+*** Добавление пользователя в проекты
+~update person <PERSON_ID> add projects <PROJECT_ID_1> <PROJECT_ID_2>~
+
+Например
+
+~update person 4 add projects 6~
+
+Или
+
+~update project 6 add persons 4~
+
+*** Удаление пользователя из проектов
+
+~update person <PERSON_ID> remove projects <PROJECT_ID>~
+
+Или (можно удалить несколько)
+~update project 6 remove persons  4~
+
+
+*** Добавление существующей задачи к пользователю
+
+~update task <TASK_ID> set person <PERSON_ID>~
+
+Или
+
+~update person <PERSON_ID> add tasks <TASK_ID>~
+
+*** Снятия польщователя с задачи
+~update person <PERSON_ID> remove tasks <TASK_ID>~
+
+Или
+
+~update task <TASK_ID> unset person~
+
+*** Удаление пользователя из проекта
+~update person <PERSON_ID> remove projects <PROJECT_ID1> <PROJECT_ID2> ...~
+
+Или
+
+~update project <PROJECT_ID> remove persons <PERSON_ID> ...~

@@ -81,11 +81,19 @@ public class CommandFactoryImpl implements CommandFactory {
             return null;
         }
         if (!input.hasNext("create|read|update|delete")) {
-            throw new UnrecognizedCommandException(input.next());
+            if (input.hasNext())
+                throw new UnrecognizedCommandException(input.next());
+            else {
+                throw new UnrecognizedCommandException("<empty>");
+            }
         }
         Action action = Action.valueOf(input.next().toUpperCase());
         if (!input.hasNext("person|project|task")) {
-            throw new UnrecognizedEntityException(input.next());
+            if (input.hasNext())
+                throw new UnrecognizedEntityException(input.next());
+            else {
+                throw new  UnrecognizedEntityException("<empty>");
+            }
         }
         Type type = Type.valueOf(input.next().toUpperCase());
         // I might use a static  map as well though.

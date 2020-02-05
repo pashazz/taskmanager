@@ -8,7 +8,7 @@ insert into person_project(person_id, project_id) values (2, 5);
 insert into person_project(person_id, project_id) values (3, 5);
 insert into person_project(person_id, project_id) values (4, 5);
 
-insert into project (id, description, name) values (6, 'Becoming a Legend', 'Legend');
+insert into project (id, description, name) values (6, 'Worldwide Known', 'Worldwide');
 insert into person_project(person_id, project_id) values (1, 6);
 insert into person_project(person_id, project_id) values (2, 6);
 
