@@ -1,6 +1,6 @@
 * Менеджер задач
 
-[[https://travis-ci.org/pashazz/taskmanager.svg?branch=master]]
+[[https://travis-ci.org/pashazz/taskmanager][https://travis-ci.org/pashazz/taskmanager.svg?branch=master]]
 
 Простой CRUD менеджер задач, обладающий следующими свойствами:
 
